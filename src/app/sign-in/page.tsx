@@ -1,4 +1,4 @@
-import { SignInGoogle, SignInResend } from "@/features/session";
+import { SignInGoogle } from "@/features/session";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 
@@ -15,11 +15,6 @@ export default async function Page() {
         <section className="space-y-1">
           <h1 className="text-2xl font-bold">Register</h1>
 
-          <SignInResend />
-        </section>
-
-        <section className="space-y-1">
-          <h2 className="text-lg font-bold">Other session methods</h2>
           <SignInGoogle />
         </section>
       </main>
