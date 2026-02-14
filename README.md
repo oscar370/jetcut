@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Jetcut
 
-## Getting Started
+Jetcut is a URL shortener built with Next.js.
 
-First, run the development server:
+## Technology Stack
+
+- **Framework:** Next.js (App Router)
+- **Database & ORM:** Postgres & Prisma
+- **Authentication:** Auth.js
+- **UI Components:** shadcn/ui
+- **Package Manager:** pnpm
+
+## Prerequisites
+
+Ensure you have the following installed:
+
+- Node.js (LTS recommended)
+- pnpm
+- PostgreSQL database
+
+Alternatively, if you are using **Nix**, the environment is pre-configured via the included flake.
+
+## Environment Variables
+
+Create a `.env` file in the root directory. The following keys are required for the application to function:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Database Connection
+DATABASE_URL=""
+
+# Authentication Security
+# Generate a secure secret using: openssl rand -base64 32
+AUTH_SECRET=""
+
+# OAuth Provider (Google)
+AUTH_GOOGLE_ID=""
+AUTH_GOOGLE_SECRET=""
+
+# Email Service (Optional - Currently Disabled)
+# Required only if testing the email component in the sessions feature.
+AUTH_RESEND_KEY=""
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> Note on Resend: The email service integration via Resend is currently disabled in the main production flow. However, the configuration is ready for development purposes. To test the email component within the sessions feature, provide a valid AUTH_RESEND_KEY.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Installation and Setup
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Clone the Repository
 
-## Learn More
+```bash
+git clone https://github.com/oscar370/jetcut.git
+cd jetcut
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Development Environment (Nix - Optional)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+If you have Nix installed, you can enter the reproducible development environment:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+nix develop
+```
 
-## Deploy on Vercel
+### Install Dependencies
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+pnpm install
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Database Setup
+
+Initialize the database and apply the Prisma schema migrations:
+
+```bash
+pnpm prisma migrate dev
+```
+
+### Running the Application
+
+```bash
+pnpm dev
+```
+
+The application will be available at http://localhost:3000.
+
+## License
+
+This project is licensed under the GPL v3.0 License - see the LICENSE file for details.
