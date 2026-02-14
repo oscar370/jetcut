@@ -48,7 +48,7 @@ export function LinkItems({ links }: LinkItemsProps) {
                   <ItemTitle>{link.originalUrl}</ItemTitle>
                   <ItemDescription>
                     <span>Short URL: </span>
-                    <span>{`http://localhost:3000/${link.shortUrl}`}</span>
+                    <span>{`https://jetcut.vercel.app/${link.shortUrl}`}</span>
                     <br />
                     <span>Expire at: </span>
                     <span> {link.expireAt?.toLocaleDateString()} </span>
@@ -58,7 +58,9 @@ export function LinkItems({ links }: LinkItemsProps) {
                   <Button
                     className="cursor-pointer"
                     onClick={() =>
-                      handleCopyUrl(`http://localhost:3000/${link.shortUrl}`)
+                      handleCopyUrl(
+                        `https://jetcut.vercel.app/${link.shortUrl}`,
+                      )
                     }
                   >
                     <Copy />

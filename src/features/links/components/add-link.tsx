@@ -55,14 +55,16 @@ export function AddLink() {
         <Item variant="outline">
           <ItemContent>
             <ItemDescription>
-              {`http://localhost:3000/${state.data.shortUrl}`}
+              {`https://jetcut.vercel.app/${state.data.shortUrl}`}
             </ItemDescription>
           </ItemContent>
           <ItemActions>
             <Button
               className="cursor-pointer"
               onClick={() =>
-                handleCopyUrl(`http://localhost:3000/${state.data.shortUrl}`)
+                handleCopyUrl(
+                  `https://jetcut.vercel.app/${state.data.shortUrl}`,
+                )
               }
             >
               <Copy />
