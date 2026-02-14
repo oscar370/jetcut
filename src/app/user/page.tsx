@@ -12,7 +12,7 @@ export default async function Page() {
     redirect("/");
   }
 
-  const user = await getUserById(session.user.id);
+  const user = await getUserById();
 
   if (user?.errors)
     return Object.values(user.errors).map((e) => e && <p key={e[0]}>{e[0]}</p>);

@@ -124,7 +124,7 @@ export async function getLinksByAccount(): Promise<ActionResponse<Link[]>> {
   }
 }
 
-export async function getUserById(id: string): Promise<ActionResponse<User>> {
+export async function getUserById(): Promise<ActionResponse<User>> {
   const session = await auth();
 
   if (!session?.user) {
@@ -138,7 +138,7 @@ export async function getUserById(id: string): Promise<ActionResponse<User>> {
 
   try {
     const user = await prisma.user.findFirst({
-      where: { id },
+      where: { id: session.user.id },
     });
 
     if (!user) {
