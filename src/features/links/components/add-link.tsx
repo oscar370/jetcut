@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Field, FieldError } from "@/components/ui/field";
 import {
   InputGroup,
-  InputGroupAddon,
+  InputGroupButton,
   InputGroupInput,
 } from "@/components/ui/input-group";
 import {
@@ -14,74 +14,57 @@ import {
   ItemDescription,
 } from "@/components/ui/item";
 import { createShortUrl } from "@/lib/actions";
-import { LinkForm, linkFormSchema } from "@/types/url";
-import { valibotResolver } from "@hookform/resolvers/valibot";
-import { Copy, SendHorizonal } from "lucide-react";
-import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { toast } from "sonner";
+import { handleCopyUrl } from "@/lib/utils";
+import { Copy, SendHorizontal } from "lucide-react";
+import { useActionState } from "react";
 
 export function AddLink() {
-  const [shortUrl, setShortUrl] = useState("");
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LinkForm>({
-    resolver: valibotResolver(linkFormSchema),
-    defaultValues: {
-      originalUrl: "",
-    },
-  });
-
-  async function onSubmit(data: LinkForm) {
-    const result = await createShortUrl(data);
-    console.log(result);
-
-    if (!result.id) {
-      toast.error("Failed to shorten the URL");
-      return;
-    }
-
-    setShortUrl(result.shortUrl);
-    toast.success("The URL has been successfully shortened");
-  }
+  const [state, action, pending] = useActionState(createShortUrl, null);
 
   return (
     <div className="space-y-2">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Controller
-          name="originalUrl"
-          control={control}
-          render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid}>
-              <InputGroup>
-                <InputGroupInput
-                  placeholder="Add your URL here"
-                  aria-invalid={fieldState.invalid}
-                  autoComplete="off"
-                  {...field}
-                />
-                <InputGroupAddon align="inline-end">
-                  <Button className="cursor-pointer" variant="ghost" size="sm">
-                    <SendHorizonal />
-                  </Button>
-                </InputGroupAddon>
-              </InputGroup>
+      <form action={action}>
+        <Field data-invalid={state?.errors?.originalUrl && true}>
+          <InputGroup>
+            <InputGroupInput
+              name="originalUrl"
+              placeholder="Add your URL here"
+              aria-invalid={state?.errors?.originalUrl && true}
+              autoComplete="off"
+            />
+            <InputGroupButton
+              type="submit"
+              aria-label="Shorten url"
+              className="cursor-pointer"
+              disabled={pending}
+            >
+              <SendHorizontal />
+            </InputGroupButton>
+          </InputGroup>
 
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-            </Field>
+          {state?.errors?.originalUrl && (
+            <FieldError errors={[{ message: state.errors.originalUrl[0] }]} />
           )}
-        />
+          {state?.errors?.duplicate && (
+            <FieldError errors={[{ message: state.errors.duplicate[0] }]} />
+          )}
+        </Field>
       </form>
 
-      {shortUrl && (
+      {state?.success && (
         <Item variant="outline">
           <ItemContent>
-            <ItemDescription> {shortUrl} </ItemDescription>
+            <ItemDescription>
+              {`http://localhost:3000/${state.data.shortUrl}`}
+            </ItemDescription>
           </ItemContent>
           <ItemActions>
-            <Button className="cursor-pointer">
+            <Button
+              className="cursor-pointer"
+              onClick={() =>
+                handleCopyUrl(`http://localhost:3000/${state.data.shortUrl}`)
+              }
+            >
               <Copy />
             </Button>
           </ItemActions>

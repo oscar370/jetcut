@@ -4,9 +4,11 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+// pnpm exec prisma migrate dev
+
 generator client {
   provider = "prisma-client"
-  output   = "../lib/generated/prisma"
+  output   = "../src/lib/generated/prisma"
 }
 
 datasource db {
@@ -19,35 +21,69 @@ enum link_status {
   disabled
 }
 
-model User {
-  id Int @id @default(autoincrement())
-  name String
-  email String @unique
-  emailVerified Boolean @default(false)
-  createdAt DateTime
-  links Link[]
-  account Account?
-}
-
 model Link {
-  id Int @id @default(autoincrement())
-  userId Int?
-  originalUrl String
-  shortUrl String @unique
-  createdAt DateTime @default(now())
-  expireAt DateTime?
-  status link_status @default(active)
-  user User? @relation(fields: [userId], references: [id])
+  id          Int         @id @default(autoincrement())
+  userId      String?
+  originalUrl String      @map("original_url")
+  shortUrl    String      @unique @map("short_url")
+  status      link_status @default(active)
+  user        User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime    @default(now()) @map("created_at")
+  expireAt    DateTime?   @map("expire_at")
+
+  @@map("links")
 }
 
+model User {
+  id            String          @id @default(cuid())
+  name          String?
+  email         String          @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+
+  link Link[]
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+ 
 model Account {
-  id Int @id @default(autoincrement())
-  userId Int @unique
-  provider String
-  providerAccount String?
-  passwordHash String?
-  refreshToken String?
-  accessToken String?
-  expireAt DateTime?
-  user User @relation(fields: [userId], references: [id])
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+ 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@id([provider, providerAccountId])
+}
+ 
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+ 
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+ 
+  @@id([identifier, token])
 }

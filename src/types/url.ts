@@ -1,6 +1,8 @@
+import { Link } from "@/lib/generated/prisma/client";
 import * as v from "valibot";
+import { Errors } from "./common";
 
-export const linkFormSchema = v.object({
+export const LinkFormSchema = v.object({
   originalUrl: v.pipe(
     v.string(),
     v.nonEmpty("Enter your URL"),
@@ -9,4 +11,6 @@ export const linkFormSchema = v.object({
   ),
 });
 
-export type LinkForm = v.InferOutput<typeof linkFormSchema>;
+export type LinkForm = v.InferOutput<typeof LinkFormSchema>;
+
+export type LinkAction = Link | Errors | null;

@@ -28,32 +28,30 @@ export type AggregateLink = {
 
 export type LinkAvgAggregateOutputType = {
   id: number | null
-  userId: number | null
 }
 
 export type LinkSumAggregateOutputType = {
   id: number | null
-  userId: number | null
 }
 
 export type LinkMinAggregateOutputType = {
   id: number | null
-  userId: number | null
+  userId: string | null
   originalUrl: string | null
   shortUrl: string | null
+  status: $Enums.link_status | null
   createdAt: Date | null
   expireAt: Date | null
-  status: $Enums.link_status | null
 }
 
 export type LinkMaxAggregateOutputType = {
   id: number | null
-  userId: number | null
+  userId: string | null
   originalUrl: string | null
   shortUrl: string | null
+  status: $Enums.link_status | null
   createdAt: Date | null
   expireAt: Date | null
-  status: $Enums.link_status | null
 }
 
 export type LinkCountAggregateOutputType = {
@@ -61,21 +59,19 @@ export type LinkCountAggregateOutputType = {
   userId: number
   originalUrl: number
   shortUrl: number
+  status: number
   createdAt: number
   expireAt: number
-  status: number
   _all: number
 }
 
 
 export type LinkAvgAggregateInputType = {
   id?: true
-  userId?: true
 }
 
 export type LinkSumAggregateInputType = {
   id?: true
-  userId?: true
 }
 
 export type LinkMinAggregateInputType = {
@@ -83,9 +79,9 @@ export type LinkMinAggregateInputType = {
   userId?: true
   originalUrl?: true
   shortUrl?: true
+  status?: true
   createdAt?: true
   expireAt?: true
-  status?: true
 }
 
 export type LinkMaxAggregateInputType = {
@@ -93,9 +89,9 @@ export type LinkMaxAggregateInputType = {
   userId?: true
   originalUrl?: true
   shortUrl?: true
+  status?: true
   createdAt?: true
   expireAt?: true
-  status?: true
 }
 
 export type LinkCountAggregateInputType = {
@@ -103,9 +99,9 @@ export type LinkCountAggregateInputType = {
   userId?: true
   originalUrl?: true
   shortUrl?: true
+  status?: true
   createdAt?: true
   expireAt?: true
-  status?: true
   _all?: true
 }
 
@@ -197,12 +193,12 @@ export type LinkGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 
 export type LinkGroupByOutputType = {
   id: number
-  userId: number | null
+  userId: string | null
   originalUrl: string
   shortUrl: string
+  status: $Enums.link_status
   createdAt: Date
   expireAt: Date | null
-  status: $Enums.link_status
   _count: LinkCountAggregateOutputType | null
   _avg: LinkAvgAggregateOutputType | null
   _sum: LinkSumAggregateOutputType | null
@@ -230,12 +226,12 @@ export type LinkWhereInput = {
   OR?: Prisma.LinkWhereInput[]
   NOT?: Prisma.LinkWhereInput | Prisma.LinkWhereInput[]
   id?: Prisma.IntFilter<"Link"> | number
-  userId?: Prisma.IntNullableFilter<"Link"> | number | null
+  userId?: Prisma.StringNullableFilter<"Link"> | string | null
   originalUrl?: Prisma.StringFilter<"Link"> | string
   shortUrl?: Prisma.StringFilter<"Link"> | string
+  status?: Prisma.Enumlink_statusFilter<"Link"> | $Enums.link_status
   createdAt?: Prisma.DateTimeFilter<"Link"> | Date | string
   expireAt?: Prisma.DateTimeNullableFilter<"Link"> | Date | string | null
-  status?: Prisma.Enumlink_statusFilter<"Link"> | $Enums.link_status
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
@@ -244,9 +240,9 @@ export type LinkOrderByWithRelationInput = {
   userId?: Prisma.SortOrderInput | Prisma.SortOrder
   originalUrl?: Prisma.SortOrder
   shortUrl?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   expireAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  status?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
 }
 
@@ -256,11 +252,11 @@ export type LinkWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.LinkWhereInput | Prisma.LinkWhereInput[]
   OR?: Prisma.LinkWhereInput[]
   NOT?: Prisma.LinkWhereInput | Prisma.LinkWhereInput[]
-  userId?: Prisma.IntNullableFilter<"Link"> | number | null
+  userId?: Prisma.StringNullableFilter<"Link"> | string | null
   originalUrl?: Prisma.StringFilter<"Link"> | string
+  status?: Prisma.Enumlink_statusFilter<"Link"> | $Enums.link_status
   createdAt?: Prisma.DateTimeFilter<"Link"> | Date | string
   expireAt?: Prisma.DateTimeNullableFilter<"Link"> | Date | string | null
-  status?: Prisma.Enumlink_statusFilter<"Link"> | $Enums.link_status
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id" | "shortUrl">
 
@@ -269,9 +265,9 @@ export type LinkOrderByWithAggregationInput = {
   userId?: Prisma.SortOrderInput | Prisma.SortOrder
   originalUrl?: Prisma.SortOrder
   shortUrl?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   expireAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  status?: Prisma.SortOrder
   _count?: Prisma.LinkCountOrderByAggregateInput
   _avg?: Prisma.LinkAvgOrderByAggregateInput
   _max?: Prisma.LinkMaxOrderByAggregateInput
@@ -284,78 +280,116 @@ export type LinkScalarWhereWithAggregatesInput = {
   OR?: Prisma.LinkScalarWhereWithAggregatesInput[]
   NOT?: Prisma.LinkScalarWhereWithAggregatesInput | Prisma.LinkScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Link"> | number
-  userId?: Prisma.IntNullableWithAggregatesFilter<"Link"> | number | null
+  userId?: Prisma.StringNullableWithAggregatesFilter<"Link"> | string | null
   originalUrl?: Prisma.StringWithAggregatesFilter<"Link"> | string
   shortUrl?: Prisma.StringWithAggregatesFilter<"Link"> | string
+  status?: Prisma.Enumlink_statusWithAggregatesFilter<"Link"> | $Enums.link_status
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Link"> | Date | string
   expireAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Link"> | Date | string | null
-  status?: Prisma.Enumlink_statusWithAggregatesFilter<"Link"> | $Enums.link_status
 }
 
 export type LinkCreateInput = {
   originalUrl: string
   shortUrl: string
+  status?: $Enums.link_status
   createdAt?: Date | string
   expireAt?: Date | string | null
-  status?: $Enums.link_status
-  user?: Prisma.UserCreateNestedOneWithoutLinksInput
+  user?: Prisma.UserCreateNestedOneWithoutLinkInput
 }
 
 export type LinkUncheckedCreateInput = {
   id?: number
-  userId?: number | null
+  userId?: string | null
   originalUrl: string
   shortUrl: string
+  status?: $Enums.link_status
   createdAt?: Date | string
   expireAt?: Date | string | null
-  status?: $Enums.link_status
 }
 
 export type LinkUpdateInput = {
   originalUrl?: Prisma.StringFieldUpdateOperationsInput | string
   shortUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.Enumlink_statusFieldUpdateOperationsInput | $Enums.link_status
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expireAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.Enumlink_statusFieldUpdateOperationsInput | $Enums.link_status
-  user?: Prisma.UserUpdateOneWithoutLinksNestedInput
+  user?: Prisma.UserUpdateOneWithoutLinkNestedInput
 }
 
 export type LinkUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  userId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   originalUrl?: Prisma.StringFieldUpdateOperationsInput | string
   shortUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.Enumlink_statusFieldUpdateOperationsInput | $Enums.link_status
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expireAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.Enumlink_statusFieldUpdateOperationsInput | $Enums.link_status
 }
 
 export type LinkCreateManyInput = {
   id?: number
-  userId?: number | null
+  userId?: string | null
   originalUrl: string
   shortUrl: string
+  status?: $Enums.link_status
   createdAt?: Date | string
   expireAt?: Date | string | null
-  status?: $Enums.link_status
 }
 
 export type LinkUpdateManyMutationInput = {
   originalUrl?: Prisma.StringFieldUpdateOperationsInput | string
   shortUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.Enumlink_statusFieldUpdateOperationsInput | $Enums.link_status
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expireAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.Enumlink_statusFieldUpdateOperationsInput | $Enums.link_status
 }
 
 export type LinkUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  userId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   originalUrl?: Prisma.StringFieldUpdateOperationsInput | string
   shortUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.Enumlink_statusFieldUpdateOperationsInput | $Enums.link_status
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expireAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.Enumlink_statusFieldUpdateOperationsInput | $Enums.link_status
+}
+
+export type LinkCountOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
+  originalUrl?: Prisma.SortOrder
+  shortUrl?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  expireAt?: Prisma.SortOrder
+}
+
+export type LinkAvgOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+}
+
+export type LinkMaxOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
+  originalUrl?: Prisma.SortOrder
+  shortUrl?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  expireAt?: Prisma.SortOrder
+}
+
+export type LinkMinOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
+  originalUrl?: Prisma.SortOrder
+  shortUrl?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  expireAt?: Prisma.SortOrder
+}
+
+export type LinkSumOrderByAggregateInput = {
+  id?: Prisma.SortOrder
 }
 
 export type LinkListRelationFilter = {
@@ -368,44 +402,32 @@ export type LinkOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type LinkCountOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
-  originalUrl?: Prisma.SortOrder
-  shortUrl?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  expireAt?: Prisma.SortOrder
-  status?: Prisma.SortOrder
+export type StringFieldUpdateOperationsInput = {
+  set?: string
 }
 
-export type LinkAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
+export type Enumlink_statusFieldUpdateOperationsInput = {
+  set?: $Enums.link_status
 }
 
-export type LinkMaxOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
-  originalUrl?: Prisma.SortOrder
-  shortUrl?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  expireAt?: Prisma.SortOrder
-  status?: Prisma.SortOrder
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Date | string
 }
 
-export type LinkMinOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
-  originalUrl?: Prisma.SortOrder
-  shortUrl?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  expireAt?: Prisma.SortOrder
-  status?: Prisma.SortOrder
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
 }
 
-export type LinkSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
 }
 
 export type LinkCreateNestedManyWithoutUserInput = {
@@ -450,37 +472,21 @@ export type LinkUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.LinkScalarWhereInput | Prisma.LinkScalarWhereInput[]
 }
 
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
-export type Enumlink_statusFieldUpdateOperationsInput = {
-  set?: $Enums.link_status
-}
-
-export type NullableIntFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type LinkCreateWithoutUserInput = {
   originalUrl: string
   shortUrl: string
+  status?: $Enums.link_status
   createdAt?: Date | string
   expireAt?: Date | string | null
-  status?: $Enums.link_status
 }
 
 export type LinkUncheckedCreateWithoutUserInput = {
   id?: number
   originalUrl: string
   shortUrl: string
+  status?: $Enums.link_status
   createdAt?: Date | string
   expireAt?: Date | string | null
-  status?: $Enums.link_status
 }
 
 export type LinkCreateOrConnectWithoutUserInput = {
@@ -514,47 +520,47 @@ export type LinkScalarWhereInput = {
   OR?: Prisma.LinkScalarWhereInput[]
   NOT?: Prisma.LinkScalarWhereInput | Prisma.LinkScalarWhereInput[]
   id?: Prisma.IntFilter<"Link"> | number
-  userId?: Prisma.IntNullableFilter<"Link"> | number | null
+  userId?: Prisma.StringNullableFilter<"Link"> | string | null
   originalUrl?: Prisma.StringFilter<"Link"> | string
   shortUrl?: Prisma.StringFilter<"Link"> | string
+  status?: Prisma.Enumlink_statusFilter<"Link"> | $Enums.link_status
   createdAt?: Prisma.DateTimeFilter<"Link"> | Date | string
   expireAt?: Prisma.DateTimeNullableFilter<"Link"> | Date | string | null
-  status?: Prisma.Enumlink_statusFilter<"Link"> | $Enums.link_status
 }
 
 export type LinkCreateManyUserInput = {
   id?: number
   originalUrl: string
   shortUrl: string
+  status?: $Enums.link_status
   createdAt?: Date | string
   expireAt?: Date | string | null
-  status?: $Enums.link_status
 }
 
 export type LinkUpdateWithoutUserInput = {
   originalUrl?: Prisma.StringFieldUpdateOperationsInput | string
   shortUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.Enumlink_statusFieldUpdateOperationsInput | $Enums.link_status
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expireAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.Enumlink_statusFieldUpdateOperationsInput | $Enums.link_status
 }
 
 export type LinkUncheckedUpdateWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   originalUrl?: Prisma.StringFieldUpdateOperationsInput | string
   shortUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.Enumlink_statusFieldUpdateOperationsInput | $Enums.link_status
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expireAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.Enumlink_statusFieldUpdateOperationsInput | $Enums.link_status
 }
 
 export type LinkUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   originalUrl?: Prisma.StringFieldUpdateOperationsInput | string
   shortUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.Enumlink_statusFieldUpdateOperationsInput | $Enums.link_status
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   expireAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  status?: Prisma.Enumlink_statusFieldUpdateOperationsInput | $Enums.link_status
 }
 
 
@@ -564,9 +570,9 @@ export type LinkSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   userId?: boolean
   originalUrl?: boolean
   shortUrl?: boolean
+  status?: boolean
   createdAt?: boolean
   expireAt?: boolean
-  status?: boolean
   user?: boolean | Prisma.Link$userArgs<ExtArgs>
 }, ExtArgs["result"]["link"]>
 
@@ -575,9 +581,9 @@ export type LinkSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   userId?: boolean
   originalUrl?: boolean
   shortUrl?: boolean
+  status?: boolean
   createdAt?: boolean
   expireAt?: boolean
-  status?: boolean
   user?: boolean | Prisma.Link$userArgs<ExtArgs>
 }, ExtArgs["result"]["link"]>
 
@@ -586,9 +592,9 @@ export type LinkSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   userId?: boolean
   originalUrl?: boolean
   shortUrl?: boolean
+  status?: boolean
   createdAt?: boolean
   expireAt?: boolean
-  status?: boolean
   user?: boolean | Prisma.Link$userArgs<ExtArgs>
 }, ExtArgs["result"]["link"]>
 
@@ -597,12 +603,12 @@ export type LinkSelectScalar = {
   userId?: boolean
   originalUrl?: boolean
   shortUrl?: boolean
+  status?: boolean
   createdAt?: boolean
   expireAt?: boolean
-  status?: boolean
 }
 
-export type LinkOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "originalUrl" | "shortUrl" | "createdAt" | "expireAt" | "status", ExtArgs["result"]["link"]>
+export type LinkOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "originalUrl" | "shortUrl" | "status" | "createdAt" | "expireAt", ExtArgs["result"]["link"]>
 export type LinkInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.Link$userArgs<ExtArgs>
 }
@@ -620,12 +626,12 @@ export type $LinkPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
-    userId: number | null
+    userId: string | null
     originalUrl: string
     shortUrl: string
+    status: $Enums.link_status
     createdAt: Date
     expireAt: Date | null
-    status: $Enums.link_status
   }, ExtArgs["result"]["link"]>
   composites: {}
 }
@@ -1051,12 +1057,12 @@ export interface Prisma__LinkClient<T, Null = never, ExtArgs extends runtime.Typ
  */
 export interface LinkFieldRefs {
   readonly id: Prisma.FieldRef<"Link", 'Int'>
-  readonly userId: Prisma.FieldRef<"Link", 'Int'>
+  readonly userId: Prisma.FieldRef<"Link", 'String'>
   readonly originalUrl: Prisma.FieldRef<"Link", 'String'>
   readonly shortUrl: Prisma.FieldRef<"Link", 'String'>
+  readonly status: Prisma.FieldRef<"Link", 'link_status'>
   readonly createdAt: Prisma.FieldRef<"Link", 'DateTime'>
   readonly expireAt: Prisma.FieldRef<"Link", 'DateTime'>
-  readonly status: Prisma.FieldRef<"Link", 'link_status'>
 }
     
 

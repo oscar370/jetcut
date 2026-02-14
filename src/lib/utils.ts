@@ -1,4 +1,5 @@
 import { clsx, type ClassValue } from "clsx";
+import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
 
 // shadcn
@@ -32,4 +33,24 @@ export function decodeBase62(str: string): number {
     num = num * 62 + CHARSET.indexOf(str[i]);
   }
   return num;
+}
+
+// copy
+
+export async function handleCopyUrl(url: string) {
+  try {
+    await navigator.clipboard.writeText(url);
+    toast.success("The URL has been successfully copied");
+  } catch (error) {
+    toast.error("Failed to copy the URL");
+    console.error(error);
+  }
+}
+
+// get url base
+
+export function getUrlBase() {
+  if (typeof window !== "undefined") {
+    return window.location.origin;
+  }
 }
