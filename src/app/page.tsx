@@ -12,8 +12,8 @@ export default async function Page() {
   const session = await auth();
 
   return (
-    <div className="h-[calc(100dvh-44px)] w-full flex justify-center items-center">
-      <main className="space-y-2 w-full">
+    <div className="flex h-[calc(100dvh-44px)] w-full items-center justify-center">
+      <main className="w-full space-y-2">
         <div className="space-y-1">
           <h1 className="text-center text-2xl font-bold">Shorten Link</h1>
 

@@ -16,7 +16,7 @@ export async function AppLayout({ children }: AppLayoutProps) {
 
   return (
     <>
-      <NavigationMenu className="flex justify-between w-full items-center max-w-full py-1 px-4">
+      <NavigationMenu className="flex w-full max-w-full items-center justify-between px-4 py-1">
         <NavigationMenuList>
           <NavigationMenuItem>
             <Link href="/" className="font-bold">
@@ -50,7 +50,7 @@ export async function AppLayout({ children }: AppLayoutProps) {
             <NavigationMenuLink asChild>
               <Link href="https://github.com/oscar370/jetcut">
                 <svg
-                  className="size-5 text-foreground!"
+                  className="text-foreground! size-5"
                   role="img"
                   viewBox="0 0 24 24"
                   xmlns="http://www.w3.org/2000/svg"
@@ -65,7 +65,7 @@ export async function AppLayout({ children }: AppLayoutProps) {
         </NavigationMenuList>
       </NavigationMenu>
 
-      <div className="max-w-150 mx-auto px-1 md:px-0 mt-2">{children}</div>
+      <div className="mx-auto mt-2 max-w-150 px-1 md:px-0">{children}</div>
     </>
   );
 }

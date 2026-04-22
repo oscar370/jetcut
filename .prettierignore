@@ -1,0 +1,6 @@
+# Ignore artifacts:
+build
+coverage
+generated
+prisma
+node_modules
